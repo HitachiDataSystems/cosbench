@@ -7,6 +7,8 @@ you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
    http://www.apache.org/licenses/LICENSE-2.0
+   
+This file has been modified by Hitachi Vantara to close a socket resource leak.
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,16 +19,21 @@ limitations under the License.
 
 package com.intel.cosbench.controller.service;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
+import com.intel.cosbench.log.LogFactory;
+import com.intel.cosbench.log.Logger;
 import com.intel.cosbench.model.DriverInfo;
 
 public class PingDriverRunner implements Runnable{
 
 	private int interval = 5000;
 	private DriverInfo[] driverInfos;
+	
+	private static final Logger LOGGER = LogFactory.getSystemLogger();
 	
 	PingDriverRunner(DriverInfo[] driverInfos){
 		this.driverInfos = driverInfos;
@@ -50,8 +57,8 @@ public class PingDriverRunner implements Runnable{
 			String ipAddress = getIpAddres(driver.getUrl());
 			try {
 				if (!ipAddress.isEmpty()) {	
+					Socket socket = new Socket();
 					try{
-						Socket socket = new Socket();
 						InetSocketAddress reAddress = new InetSocketAddress(ipAddress, 18088);
 						InetSocketAddress locAddress = new InetSocketAddress("127.0.0.1", 0);
 						socket.bind(locAddress);
@@ -59,6 +66,12 @@ public class PingDriverRunner implements Runnable{
 						isAlive = true;
 						}catch(Exception e){
 							isAlive = false;
+						} finally {
+							try {
+								socket.close();
+							} catch (IOException e) {
+								LOGGER.error("IOException encountered while closing socket", e);
+							}
 						}
 				}
 			}finally{

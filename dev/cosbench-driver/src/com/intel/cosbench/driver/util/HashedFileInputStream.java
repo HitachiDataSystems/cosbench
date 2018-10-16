@@ -8,6 +8,9 @@ You may obtain a copy of the License at
 
    http://www.apache.org/licenses/LICENSE-2.0
 
+This file has been modified by Hitachi Vantara to extend the SafeReadNullInputStream class
+instead of the NullInputStream class in order to deprecate use of the NullInputStream in COSBench.
+
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,7 +25,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import org.apache.commons.io.input.NullInputStream;
+import com.intel.cosbench.driver.generator.SafeReadNullInputStream;
 
 /**
  * This class is used to concatinate the file given with its hash (hash is formatted !!!!$hash!!!!)
@@ -30,7 +33,7 @@ import org.apache.commons.io.input.NullInputStream;
  * @author Niklas Goerke niklas974@github
  * 
  */
-public class HashedFileInputStream extends NullInputStream {
+public class HashedFileInputStream extends SafeReadNullInputStream {
 
     private static final int SIZE = 4096; // 4 KB
 

@@ -7,6 +7,9 @@ you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
    http://www.apache.org/licenses/LICENSE-2.0
+   
+This class has been modified by Hitachi Vantara to add support for AWS SDK to use V4 Authentication
+by extending the SafeReadNullInputStream instead of the NullInputStream.
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,7 +23,6 @@ package com.intel.cosbench.driver.generator;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
-import org.apache.commons.io.input.NullInputStream;
 import org.apache.commons.lang.math.RandomUtils;
 
 import com.intel.cosbench.driver.util.HashUtil;
@@ -32,7 +34,7 @@ import com.intel.cosbench.log.*;
  * @author ywang19, qzheng7
  * 
  */
-public class RandomInputStream extends NullInputStream {
+public class RandomInputStream extends SafeReadNullInputStream {
 
     private static final int SIZE = 4096; // 4 KB
 

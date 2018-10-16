@@ -13,6 +13,8 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. 
+
+This file has been modified by Hitachi Vantara to close a resource leak from the Scanner object
 */ 
 
 package com.intel.cosbench.controller.archiver;
@@ -294,10 +296,12 @@ public class SimpleWorkloadArchiver implements WorkloadArchiver {
             return 0;
         int count;
         Reader reader = new BufferedReader(new FileReader(file));
+        Scanner scanner = new Scanner(reader);
         try {
-            count = new Scanner(reader).nextInt();
+            count = scanner.nextInt();
         } finally {
             reader.close();
+            scanner.close();
         }
         LOGGER.debug("workload count has been retrieved as {}", count);
         return count;
