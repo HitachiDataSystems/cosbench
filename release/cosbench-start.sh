@@ -8,6 +8,9 @@
 #
 #   http://www.apache.org/licenses/LICENSE-2.0
 #
+#Modified by Hitachi Vantara to not specify additional parameters to nc to allow for 
+#this script to work on centos/fedora installs.
+#
 #Unless required by applicable law or agreed to in writing, software
 #distributed under the License is distributed on an "AS IS" BASIS,
 #WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -32,7 +35,7 @@ OSGI_CONFIG=conf/.$SERVICE_NAME
 TOMCAT_CONFIG=conf/$SERVICE_NAME-tomcat-server.xml
 
 TOOL="nc"
-TOOL_PARAMS="-i 0"
+TOOL_PARAMS=""
 
 #-------------------------------
 # MAIN

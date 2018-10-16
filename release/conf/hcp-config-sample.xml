@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<workload name="hcps3-sample" description="sample benchmark for s3">
+
+ <!-- Writes and reads 10,000 4k files over https with V4 authentication to namespace "ns1" -->
+ <!-- In order to use the HCP plugin MAPI must be enabled on the tenant. 
+      If additional configuration is to be testedsuch as using http, no-authentication, or testing version - 
+		the the namespace must be pre-created with an appropriate configuration and the XML adjusted to write to this namespace instead of creating a new one -->
+
+  <storage type="hcp" config="endpoint=<tenant>.<cluster>.<domain>.com;username=<tenantUser>;password=<password>;signer_version=v4;protocol=https;disable_cert_check=true" />
+
+  <workflow>
+
+	<workstage name="create-bucket">
+		<work type="init" workers="1" config="cprefix=ns;containers=r(1,1)" />
+	</workstage>
+
+	<workstage name="create-10k-4kb-files">
+		<work name="main" type="normal" interval="10" division="object" rampup="0" rampdown="0" workers="50" totalOps="10000">
+			<operation type="write" config="cprefix=ns; containers=c(1); oprefix=cos_; objects=r(1,10000); sizes=c(4)KB" />
+		</work>
+	</workstage>
+
+	<workstage name="read-10k-4kb-files">
+		<work name="main" type="normal" interval="10" division="object" rampup="0" rampdown="0" workers="50" totalOps="10000">
+			<operation type="read" config="cprefix=ns; containers=c(1); oprefix=cos_; objects=r(1,10000)" />
+		</work>
+	</workstage>
+
+  </workflow>
+
+</workload>
