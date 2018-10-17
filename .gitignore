@@ -6,3 +6,6 @@
 /0.3.0.9
 /META-INF
 /OSGI-INF
+
+# We are checking in binary files separately so need to check in extra jars #
+dist/osgi/plugins/*
