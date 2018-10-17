@@ -1,3 +1,13 @@
+  COSBench 0.4.3.0
+------------------------------------
+. Update AUTHORS, CHANGELOG, and DISTRIBUTIONS.md for the forked repo
+. modify the cosbench startup scripts to include cosbench-hcp and add hcp-config-sample.xml
+. add cosbench-hcp storage adaptor and update README.MD
+. Update version to 0.4.3.0, fix resource leaks in SimpleWorkloadArchiver and PingDriverRunner, Add SafeReadNullInputStream to allow for V4 authentication to work
+. cosbench-oss: fix build errors with .classpath
+. Fork COSBench from master into Hitachi-Data-Systems/cosbench
+
+
   COSBench 0.4.1.0(14-ww53.2)
 ------------------------------------
 . Add one workload under workloads folder, whose distribution is summarized from two week's trace on ASUS WebStorage. Thanks ASUS' contribution!
