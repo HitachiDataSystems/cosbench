@@ -1,5 +1,7 @@
   COSBench 0.4.3.0
 ------------------------------------
+. add dist/osgi/plugins/ to .gitignore to not check in built jars
+. Update COSBenchUserGuide.pdf to include hcp storage adaptor
 . Update AUTHORS, CHANGELOG, and DISTRIBUTIONS.md for the forked repo
 . modify the cosbench startup scripts to include cosbench-hcp and add hcp-config-sample.xml
 . add cosbench-hcp storage adaptor and update README.MD
